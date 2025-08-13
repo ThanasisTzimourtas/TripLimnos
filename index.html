@@ -15,7 +15,7 @@
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
-            padding: 20px;
+            padding: 10px;
         }
         
         .container {
@@ -30,44 +30,62 @@
         .header {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
-            padding: 30px;
+            padding: 20px;
             text-align: center;
         }
         
         .header h1 {
-            font-size: 2.5em;
-            margin-bottom: 10px;
+            font-size: clamp(1.5em, 4vw, 2.5em);
+            margin-bottom: 8px;
             text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
         }
         
         .header p {
-            font-size: 1.2em;
+            font-size: clamp(0.9em, 2.5vw, 1.2em);
             opacity: 0.95;
         }
         
         .main-content {
             display: flex;
+            flex-direction: column;
             min-height: 700px;
+        }
+        
+        @media (min-width: 768px) {
+            .main-content {
+                flex-direction: row;
+            }
         }
         
         .map-section {
             flex: 1;
             position: relative;
             background: linear-gradient(to bottom, #e3f2fd 0%, #bbdefb 100%);
-            padding: 20px;
+            padding: 15px;
+            min-height: 400px;
         }
         
         .info-panel {
-            width: 420px;
+            width: 100%;
             background: #fafafa;
             display: flex;
             flex-direction: column;
-            border-left: 1px solid #e0e0e0;
+            border-left: none;
+            border-top: 1px solid #e0e0e0;
+        }
+        
+        @media (min-width: 768px) {
+            .info-panel {
+                width: 420px;
+                border-left: 1px solid #e0e0e0;
+                border-top: none;
+            }
         }
         
         svg {
             width: 100%;
             height: 100%;
+            min-height: 400px;
             filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
         }
         
@@ -151,28 +169,42 @@
         
         .legend {
             position: absolute;
-            bottom: 20px;
-            left: 20px;
+            bottom: 10px;
+            left: 10px;
+            right: 10px;
             background: rgba(255,255,255,0.95);
-            padding: 15px;
-            border-radius: 12px;
+            padding: 10px;
+            border-radius: 8px;
             box-shadow: 0 4px 12px rgba(0,0,0,0.15);
             backdrop-filter: blur(10px);
             transition: all 0.3s ease;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 5px;
+        }
+        
+        @media (min-width: 480px) {
+            .legend {
+                grid-template-columns: repeat(4, 1fr);
+                width: auto;
+                right: auto;
+            }
         }
         
         .legend h3 {
-            margin: 0 0 12px 0;
+            grid-column: 1 / -1;
+            margin: 0 0 8px 0;
             color: #2c3e50;
             font-size: 14px;
             font-weight: 600;
+            text-align: center;
         }
         
         .legend-item {
             display: flex;
             align-items: center;
-            margin: 8px 0;
-            font-size: 12px;
+            margin: 4px 0;
+            font-size: 11px;
             color: #546e7a;
             transition: all 0.2s ease;
         }
@@ -183,10 +215,10 @@
         }
         
         .legend-color {
-            width: 16px;
-            height: 16px;
+            width: 12px;
+            height: 12px;
             border-radius: 50%;
-            margin-right: 8px;
+            margin-right: 6px;
             border: 2px solid white;
             box-shadow: 0 2px 4px rgba(0,0,0,0.2);
             transition: all 0.2s ease;
@@ -197,27 +229,47 @@
         }
         
         .day-controls {
-            padding: 20px;
+            padding: 15px;
             background: white;
             border-bottom: 1px solid #e0e0e0;
+            overflow-x: auto;
+            white-space: nowrap;
+            -webkit-overflow-scrolling: touch;
+        }
+        
+        @media (min-width: 480px) {
+            .day-controls {
+                overflow-x: visible;
+                white-space: normal;
+            }
         }
         
         .day-buttons {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
-            gap: 8px;
+            gap: 6px;
+        }
+        
+        @media (max-width: 480px) {
+            .day-buttons {
+                display: inline-grid;
+                grid-auto-flow: column;
+                grid-auto-columns: minmax(80px, 1fr);
+                width: auto;
+            }
         }
         
         .day-button {
-            padding: 12px 8px;
+            padding: 10px 6px;
             background: #eceff1;
             color: #546e7a;
             border: 2px solid transparent;
-            border-radius: 10px;
+            border-radius: 8px;
             cursor: pointer;
-            font-size: 13px;
+            font-size: 12px;
             font-weight: 500;
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            min-width: 80px;
         }
         
         .day-button:hover {
@@ -237,7 +289,8 @@
         .day-content {
             flex: 1;
             overflow-y: auto;
-            padding: 20px;
+            padding: 15px;
+            -webkit-overflow-scrolling: touch;
         }
         
         .day-info {
@@ -260,10 +313,10 @@
         }
         
         .day-title {
-            font-size: 1.8em;
+            font-size: clamp(1.3em, 5vw, 1.8em);
             color: #2c3e50;
             margin-bottom: 8px;
-            padding-bottom: 12px;
+            padding-bottom: 8px;
             border-bottom: 3px solid transparent;
             border-image: linear-gradient(90deg, #667eea, #764ba2) 1;
             animation: fadeIn 0.8s ease forwards;
@@ -271,11 +324,11 @@
         
         .day-region {
             color: #7f8c8d;
-            font-size: 1em;
-            margin-bottom: 20px;
+            font-size: clamp(0.9em, 3vw, 1em);
+            margin-bottom: 15px;
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 6px;
             animation: fadeIn 1s ease forwards;
         }
         
@@ -285,10 +338,10 @@
         }
         
         .section {
-            margin-bottom: 24px;
+            margin-bottom: 18px;
             background: white;
-            padding: 16px;
-            border-radius: 12px;
+            padding: 12px;
+            border-radius: 10px;
             box-shadow: 0 2px 8px rgba(0,0,0,0.05);
             transition: all 0.3s ease;
             animation: fadeInUp 0.6s ease forwards;
@@ -313,19 +366,19 @@
         }
         
         .section-title {
-            font-size: 1.1em;
+            font-size: clamp(1em, 3.5vw, 1.1em);
             color: #34495e;
-            margin-bottom: 12px;
+            margin-bottom: 10px;
             font-weight: 600;
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 6px;
         }
         
         .section-title::before {
             content: '';
             width: 4px;
-            height: 18px;
+            height: 16px;
             background: linear-gradient(180deg, #667eea, #764ba2);
             border-radius: 2px;
         }
@@ -336,13 +389,23 @@
         }
         
         .item-list li {
-            padding: 10px 0;
+            padding: 8px 0;
             padding-left: 24px;
             position: relative;
             color: #546e7a;
-            line-height: 1.6;
+            line-height: 1.5;
             transition: all 0.2s;
             border-bottom: 1px solid #f0f0f0;
+            cursor: pointer;
+        }
+        
+        .item-list li.completed {
+            text-decoration: line-through;
+            color: #b0bec5;
+        }
+        
+        .item-list li.completed::before {
+            color: #b0bec5;
         }
         
         .item-list li:last-child {
@@ -370,18 +433,18 @@
         
         .tooltip {
             position: absolute;
-            padding: 12px 16px;
+            padding: 10px 14px;
             background: linear-gradient(135deg, rgba(0,0,0,0.9), rgba(0,0,0,0.8));
             color: white;
-            border-radius: 10px;
-            font-size: 13px;
+            border-radius: 8px;
+            font-size: 12px;
             pointer-events: none;
             opacity: 0;
             transition: opacity 0.3s, transform 0.2s;
             z-index: 1000;
             backdrop-filter: blur(10px);
             border: 1px solid rgba(255,255,255,0.1);
-            max-width: 250px;
+            max-width: 200px;
             transform: translateY(5px);
         }
         
@@ -398,10 +461,10 @@
         
         .compass {
             position: absolute;
-            top: 20px;
-            right: 20px;
-            width: 50px;
-            height: 50px;
+            top: 15px;
+            right: 15px;
+            width: 40px;
+            height: 40px;
             background: white;
             border-radius: 50%;
             box-shadow: 0 4px 12px rgba(0,0,0,0.15);
@@ -410,7 +473,7 @@
             justify-content: center;
             font-weight: bold;
             color: #e74c3c;
-            font-size: 18px;
+            font-size: 16px;
             transition: all 0.3s ease;
             animation: rotateCompass 4s linear infinite;
         }
@@ -443,6 +506,37 @@
         
         .island-glow {
             filter: url(#glow);
+        }
+        
+        .undo-btn {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            font-size: 20px;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.3s ease;
+        }
+        
+        .undo-btn.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .undo-btn:hover {
+            transform: scale(1.1) translateY(0);
         }
     </style>
 </head>
@@ -726,18 +820,18 @@
                         <div class="section" style="--order: 1">
                             <h3 class="section-title">Αξιοθέατα</h3>
                             <ul class="item-list">
-                                <li>17:00 - Άφιξη στο λιμάνι</li>
-                                <li>Κάστρο Μύρινας - Βυζαντινό κάστρο με θέα</li>
-                                <li>Προϊστορικός Οικισμός - 3000 π.Χ.</li>
-                                <li>Μητροπολιτικός Ναός - Ιστορική εκκλησία</li>
+                                <li data-id="day1-arrival">17:00 - Άφιξη στο λιμάνι</li>
+                                <li data-id="day1-castle">Κάστρο Μύρινας - Βυζαντινό κάστρο με θέα</li>
+                                <li data-id="day1-settlement">Προϊστορικός Οικισμός - 3000 π.Χ.</li>
+                                <li data-id="day1-church">Μητροπολιτικός Ναός - Ιστορική εκκλησία</li>
                             </ul>
                         </div>
                         
                         <div class="section" style="--order: 2">
                             <h3 class="section-title">Παραλίες</h3>
                             <ul class="item-list">
-                                <li>Ρωμαϊκός Γιαλός - Κεντρική παραλία</li>
-                                <li>Ρηχά Νερά - Ιδανική για παιδιά</li>
+                                <li data-id="day1-beach1">Ρωμαϊκός Γιαλός - Κεντρική παραλία</li>
+                                <li data-id="day1-beach2">Ρηχά Νερά - Ιδανική για παιδιά</li>
                             </ul>
                         </div>
                     </div>
@@ -749,18 +843,18 @@
                         <div class="section" style="--order: 1">
                             <h3 class="section-title">Αξιοθέατα</h3>
                             <ul class="item-list">
-                                <li>Αρχαίο Θέατρο Ηφαιστίας - 3ος αι. π.Χ.</li>
-                                <li>Ιερό των Καβείρων - Μυστικιστικός λατρείας</li>
-                                <li>Σπηλιά Φιλοκτήτη - Μυθική τοποθεσία</li>
-                                <li>Κάστρο Κότσινα - Μεσαιωνική ακρόπολη</li>
+                                <li data-id="day2-theater">Αρχαίο Θέατρο Ηφαιστίας - 3ος αι. π.Χ.</li>
+                                <li data-id="day2-sanctuary">Ιερό των Καβείρων - Μυστικιστικός λατρείας</li>
+                                <li data-id="day2-cave">Σπηλιά Φιλοκτήτη - Μυθική τοποθεσία</li>
+                                <li data-id="day2-castle">Κάστρο Κότσινα - Μεσαιωνική ακρόπολη</li>
                             </ul>
                         </div>
                         
                         <div class="section" style="--order: 2">
                             <h3 class="section-title">Παραλίες</h3>
                             <ul class="item-list">
-                                <li>Κοτσίνας - Ησυχη παραλία</li>
-                                <li>Ζεματάς - Γαλάζια νερά</li>
+                                <li data-id="day2-beach1">Κοτσίνας - Ησυχη παραλία</li>
+                                <li data-id="day2-beach2">Ζεματάς - Γαλάζια νερά</li>
                             </ul>
                         </div>
                     </div>
@@ -772,18 +866,18 @@
                         <div class="section" style="--order: 1">
                             <h3 class="section-title">Αξιοθέατα</h3>
                             <ul class="item-list">
-                                <li>Πολιόχνη - Αρχαιότερη πόλη Ευρώπης (5000 π.Χ.)</li>
-                                <li>Απολιθωμένο Δάσος - Μοναδικό φαινόμενο</li>
-                                <li>Φάρος Πλάκας - Εντυπωσιακή θέα</li>
-                                <li>Αραπικό - Παραδοσιακό χωριό</li>
+                                <li data-id="day3-poliochni">Πολιόχνη - Αρχαιότερη πόλη Ευρώπης (5000 π.Χ.)</li>
+                                <li data-id="day3-forest">Απολιθωμένο Δάσος - Μοναδικό φαινόμενο</li>
+                                <li data-id="day3-lighthouse">Φάρος Πλάκας - Εντυπωσιακή θέα</li>
+                                <li data-id="day3-village">Αραπικό - Παραδοσιακό χωριό</li>
                             </ul>
                         </div>
                         
                         <div class="section" style="--order: 2">
                             <h3 class="section-title">Παραλίες</h3>
                             <ul class="item-list">
-                                <li>Κέρος - 4χλμ για windsurf</li>
-                                <li>Σκίδι - Απομονωμένη παραλία</li>
+                                <li data-id="day3-beach1">Κέρος - 4χλμ για windsurf</li>
+                                <li data-id="day3-beach2">Σκίδι - Απομονωμένη παραλία</li>
                             </ul>
                         </div>
                     </div>
@@ -795,18 +889,18 @@
                         <div class="section" style="--order: 1">
                             <h3 class="section-title">Αξιοθέατα</h3>
                             <ul class="item-list">
-                                <li>Συμμαχικό Νεκροταφείο Μούδρου - Α' Παγκόσμιος Πόλεμος</li>
-                                <li>Συμμαχικό Νεκροταφείο Πορτιανού - Ιστορική σημασία</li>
-                                <li>Ιερός Ναός Κοιμήσεως - Εντυπωσιακή αρχιτεκτονική</li>
-                                <li>Άγαλμα Μαρούλας - Συμβολική τοποθεσία</li>
+                                <li data-id="day4-cemetery1">Συμμαχικό Νεκροταφείο Μούδρου - Α' Παγκόσμιος Πόλεμος</li>
+                                <li data-id="day4-cemetery2">Συμμαχικό Νεκροταφείο Πορτιανού - Ιστορική σημασία</li>
+                                <li data-id="day4-church">Ιερός Ναός Κοιμήσεως - Εντυπωσιακή αρχιτεκτονική</li>
+                                <li data-id="day4-statue">Άγαλμα Μαρούλας - Συμβολική τοποθεσία</li>
                             </ul>
                         </div>
                         
                         <div class="section" style="--order: 2">
                             <h3 class="section-title">Παραλίες</h3>
                             <ul class="item-list">
-                                <li>Φαναράκι (Μεγάλο & Μικρό) - Χρυσή άμμος</li>
-                                <li>Χαβούλη - Ησυχη παραλία</li>
+                                <li data-id="day4-beach1">Φαναράκι (Μεγάλο & Μικρό) - Χρυσή άμμος</li>
+                                <li data-id="day4-beach2">Χαβούλη - Ησυχη παραλία</li>
                             </ul>
                         </div>
                     </div>
@@ -818,18 +912,18 @@
                         <div class="section" style="--order: 1">
                             <h3 class="section-title">Αξιοθέατα</h3>
                             <ul class="item-list">
-                                <li>Αμμοθίνες - Η μικρή έρημος της Λήμνου</li>
-                                <li>Υγρότοπος Αλυκής - Πουλιά και φύση</li>
-                                <li>Ανεμόμυλοι Κόντια - Παραδοσιακοί ανεμόμυλοι</li>
-                                <li>Καταρράκτης Κασπακά - Σπάνιο φαινόμενο</li>
+                                <li data-id="day5-sand">Αμμοθίνες - Η μικρή έρημος της Λήμνου</li>
+                                <li data-id="day5-wetland">Υγρότοπος Αλυκής - Πουλιά και φύση</li>
+                                <li data-id="day5-windmills">Ανεμόμυλοι Κόντια - Παραδοσιακοί ανεμόμυλοι</li>
+                                <li data-id="day5-waterfall">Καταρράκτης Κασπακά - Σπάνιο φαινόμενο</li>
                             </ul>
                         </div>
                         
                         <div class="section" style="--order: 2">
                             <h3 class="section-title">Παραλίες</h3>
                             <ul class="item-list">
-                                <li>Γομάτι - Top παραλία με γαλάζια νερά</li>
-                                <li>Κοντοπούλι - Αμμώδης παραλία</li>
+                                <li data-id="day5-beach1">Γομάτι - Top παραλία με γαλάζια νερά</li>
+                                <li data-id="day5-beach2">Κοντοπούλι - Αμμώδης παραλία</li>
                             </ul>
                         </div>
                     </div>
@@ -841,18 +935,18 @@
                         <div class="section" style="--order: 1">
                             <h3 class="section-title">Αξιοθέατα</h3>
                             <ul class="item-list">
-                                <li>Άγιος Σώζων - Μικρή εκκλησία με θέα</li>
-                                <li>Παναγία Κακαβιώτισσα - Ιστορικό μοναστήρι</li>
-                                <li>Απολιθωμένος Κορμός - Φυσικό θαύμα</li>
-                                <li>Φαλακρό - Βουνό με πανοραμική θέα</li>
+                                <li data-id="day6-church1">Άγιος Σώζων - Μικρή εκκλησία με θέα</li>
+                                <li data-id="day6-church2">Παναγία Κακαβιώτισσα - Ιστορικό μοναστήρι</li>
+                                <li data-id="day6-tree">Απολιθωμένος Κορμός - Φυσικό θαύμα</li>
+                                <li data-id="day6-mountain">Φαλακρό - Βουνό με πανοραμική θέα</li>
                             </ul>
                         </div>
                         
                         <div class="section" style="--order: 2">
                             <h3 class="section-title">Παραλίες</h3>
                             <ul class="item-list">
-                                <li>Θάνος - Ησυχη παραλία με βότσαλα</li>
-                                <li>Άγιος Ιωάννης - Μικρή και απομονωμένη</li>
+                                <li data-id="day6-beach1">Θάνος - Ησυχη παραλία με βότσαλα</li>
+                                <li data-id="day6-beach2">Άγιος Ιωάννης - Μικρή και απομονωμένη</li>
                             </ul>
                         </div>
                     </div>
@@ -864,19 +958,19 @@
                         <div class="section" style="--order: 1">
                             <h3 class="section-title">Δραστηριότητες</h3>
                             <ul class="item-list">
-                                <li>Κτήμα Ήφαιστος - Ιππασία και αμπέλια</li>
-                                <li>Οινοποιείο Γκάραλης - Δοκιμή κρασιών</li>
-                                <li>Αποστακτήριο Καζάνι - Τοπικά προϊόντα</li>
-                                <li>18:00 - Επιστροφή στο λιμάνι</li>
-                                <li>21:00 - Αναχώρηση</li>
+                                <li data-id="day7-horse">Κτήμα Ήφαιστος - Ιππασία και αμπέλια</li>
+                                <li data-id="day7-winery">Οινοποιείο Γκάραλης - Δοκιμή κρασιών</li>
+                                <li data-id="day7-distillery">Αποστακτήριο Καζάνι - Τοπικά προϊόντα</li>
+                                <li data-id="day7-departure1">18:00 - Επιστροφή στο λιμάνι</li>
+                                <li data-id="day7-departure2">21:00 - Αναχώρηση</li>
                             </ul>
                         </div>
                         
                         <div class="section" style="--order: 2">
                             <h3 class="section-title">Τελευταίο μπάνιο</h3>
                             <ul class="item-list">
-                                <li>Πλατύ - Κοντινή παραλία</li>
-                                <li>Τούρκικος Γιαλός - Ιστορική τοποθεσία</li>
+                                <li data-id="day7-beach1">Πλατύ - Κοντινή παραλία</li>
+                                <li data-id="day7-beach2">Τούρκικος Γιαλός - Ιστορική τοποθεσία</li>
                             </ul>
                         </div>
                     </div>
@@ -885,11 +979,95 @@
         </div>
     </div>
     
+    <button class="undo-btn" id="undo-btn" title="Αναίρεση τελευταίας ενέργειας">↩</button>
+    
     <script>
         const tooltip = document.getElementById('tooltip');
         const locations = document.querySelectorAll('.location');
         const dayButtons = document.querySelectorAll('.day-button');
         const dayInfos = document.querySelectorAll('.day-info');
+        const listItems = document.querySelectorAll('.item-list li');
+        const undoBtn = document.getElementById('undo-btn');
+        
+        // Store completed items and undo stack
+        let completedItems = JSON.parse(localStorage.getItem('completedItems')) || [];
+        let undoStack = JSON.parse(localStorage.getItem('undoStack')) || [];
+        
+        // Initialize completed items
+        function initializeCompletedItems() {
+            listItems.forEach(item => {
+                const itemId = item.getAttribute('data-id');
+                if (completedItems.includes(itemId)) {
+                    item.classList.add('completed');
+                }
+            });
+        }
+        
+        // Save to localStorage
+        function saveState() {
+            localStorage.setItem('completedItems', JSON.stringify(completedItems));
+            localStorage.setItem('undoStack', JSON.stringify(undoStack));
+        }
+        
+        // Toggle item completion
+        function toggleItemCompletion(item) {
+            const itemId = item.getAttribute('data-id');
+            
+            if (item.classList.contains('completed')) {
+                // Undo completion
+                item.classList.remove('completed');
+                completedItems = completedItems.filter(id => id !== itemId);
+                
+                // Add to undo stack with action 'add'
+                undoStack.push({ action: 'add', itemId });
+            } else {
+                // Complete item
+                item.classList.add('completed');
+                completedItems.push(itemId);
+                
+                // Add to undo stack with action 'remove'
+                undoStack.push({ action: 'remove', itemId });
+            }
+            
+            // Show/hide undo button
+            updateUndoButton();
+            
+            // Save state
+            saveState();
+        }
+        
+        // Undo last action
+        function undoLastAction() {
+            if (undoStack.length === 0) return;
+            
+            const lastAction = undoStack.pop();
+            const item = document.querySelector(`[data-id="${lastAction.itemId}"]`);
+            
+            if (lastAction.action === 'add') {
+                // Redo the add (which was originally an undo of remove)
+                item.classList.add('completed');
+                completedItems.push(lastAction.itemId);
+            } else {
+                // Redo the remove (which was originally an undo of add)
+                item.classList.remove('completed');
+                completedItems = completedItems.filter(id => id !== lastAction.itemId);
+            }
+            
+            // Update undo button visibility
+            updateUndoButton();
+            
+            // Save state
+            saveState();
+        }
+        
+        // Update undo button visibility
+        function updateUndoButton() {
+            if (undoStack.length > 0) {
+                undoBtn.classList.add('visible');
+            } else {
+                undoBtn.classList.remove('visible');
+            }
+        }
         
         // Improved island animation
         const island = document.querySelector('.island-land');
@@ -962,6 +1140,16 @@
             });
         });
         
+        // List item click handlers
+        listItems.forEach(item => {
+            item.addEventListener('click', function() {
+                toggleItemCompletion(this);
+            });
+        });
+        
+        // Undo button click handler
+        undoBtn.addEventListener('click', undoLastAction);
+        
         function showDay(day) {
             // Update buttons with transition
             dayButtons.forEach(btn => {
@@ -1027,6 +1215,8 @@
         // Initialize with animation
         setTimeout(() => {
             showDay('all');
+            initializeCompletedItems();
+            updateUndoButton();
             
             // Initial island animation
             island.style.transition = 'all 1s ease';
@@ -1035,6 +1225,25 @@
                 island.style.transform = 'scale(1)';
             }, 1000);
         }, 500);
+        
+        // Make SVG responsive
+        function updateSVGViewBox() {
+            const svg = document.querySelector('svg');
+            const container = document.querySelector('.map-section');
+            const aspectRatio = 900 / 600;
+            
+            if (window.innerWidth < 768) {
+                // For mobile, adjust viewBox to show more of the island
+                svg.setAttribute('viewBox', '100 100 700 500');
+            } else {
+                // For desktop, use original viewBox
+                svg.setAttribute('viewBox', '0 0 900 600');
+            }
+        }
+        
+        // Initial call and event listener for resize
+        updateSVGViewBox();
+        window.addEventListener('resize', updateSVGViewBox);
     </script>
 </body>
 </html>
