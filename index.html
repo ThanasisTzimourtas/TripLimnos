@@ -171,7 +171,6 @@
             position: absolute;
             bottom: 10px;
             left: 10px;
-            right: 10px;
             background: rgba(255,255,255,0.95);
             padding: 10px;
             border-radius: 8px;
@@ -181,13 +180,13 @@
             display: grid;
             grid-template-columns: repeat(2, 1fr);
             gap: 5px;
+            z-index: 10;
         }
         
         @media (min-width: 480px) {
             .legend {
                 grid-template-columns: repeat(4, 1fr);
                 width: auto;
-                right: auto;
             }
         }
         
@@ -568,7 +567,7 @@
                     <path class="waves" d="M0,400 Q150,350 300,400 T600,400 T900,400" />
                     <path class="waves" d="M0,500 Q150,450 300,500 T600,500 T900,500" />
                     
-                    <!-- Accurate Limnos island shape -->
+                    <!-- More accurate Limnos island shape -->
                     <g id="limnos-island" class="island-glow">
                         <!-- Main island body -->
                         <path class="island-land" d="
@@ -1234,10 +1233,23 @@
             
             if (window.innerWidth < 768) {
                 // For mobile, adjust viewBox to show more of the island
-                svg.setAttribute('viewBox', '100 100 700 500');
+                svg.setAttribute('viewBox', '50 50 800 500');
+                
+                // Move legend to bottom center
+                const legend = document.querySelector('.legend');
+                legend.style.left = '50%';
+                legend.style.transform = 'translateX(-50%)';
+                legend.style.bottom = '20px';
+                legend.style.right = 'auto';
             } else {
                 // For desktop, use original viewBox
                 svg.setAttribute('viewBox', '0 0 900 600');
+                
+                // Reset legend position
+                const legend = document.querySelector('.legend');
+                legend.style.left = '10px';
+                legend.style.transform = 'none';
+                legend.style.bottom = '10px';
             }
         }
         
